@@ -25,6 +25,14 @@ function button3() {
     const div3 = window.document.getElementById("button3-render")
     div3.replaceWith(styledCountry.getElementById("button3-render"))
 
+    //Question 10 - highlight same speaking countries in green on the world map
+    const sameSpeakingCodes = document.evaluate("//country[contains(languages, //country[country_codes/cca2 = '" + countryCode + "']/languages)]/country_codes/cca2", xmlDocument)
+    let sameSpeakingCode = sameSpeakingCodes.iterateNext();
+    while (sameSpeakingCode) {
+        const countrySvgPath = window.document.getElementById(sameSpeakingCode.textContent)
+        countrySvgPath.style.fill = "green"
+        sameSpeakingCode = sameSpeakingCodes.iterateNext()
+    }
 }
 
 function button4() {
