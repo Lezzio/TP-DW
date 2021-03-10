@@ -110,7 +110,7 @@ function button9() {
         //Population datalist for autocomplete
         const countryDatalist = window.document.getElementById("country-list")
         const xmlDocument = chargerHttpXML("countriesTP.xml")
-        const codes = document.evaluate("//country/country_codes/cca2", xmlDocument)
+        const codes = xmlDocument.evaluate("//country/country_codes/cca2", xmlDocument)
         let code = codes.iterateNext();
         while (code) {
             console.log(code.textContent)
