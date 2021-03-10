@@ -126,9 +126,18 @@ function button10() {
 }
 
 async function button11() {
-    let resultAllCodes = await fetch("https://restcountries.eu/rest/v2/all?fields=alpha2Code")
+    let results = await fetch("https://restcountries.eu/rest/v2/all?fields=alpha2Code;gini")
         .then(response => response.json())
 
+    for(let i = 0; i < results.length; i++) {
+        const result = results[i]
+        const gini = result.gini
+        const code = result.alpha2Code
+        const countryPath = window.document.getElementById(code)
+        if(gini != null) countryPath.style.fill = giniColor(gini)
+    }
+
+    /*
     resultAllCodes = resultAllCodes.map(e => e.alpha2Code)
 
     for (let i = 0; i < resultAllCodes.length; i++) {
@@ -140,6 +149,7 @@ async function button11() {
         if(gini != null) countryPath.style.fill = giniColor(gini)
 
     }
+     */
 
     //https://restcountries.eu/rest/v2/all?fields=alpha2Code
 }
