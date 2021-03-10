@@ -79,7 +79,11 @@ function button6() {
 }
 
 function button7() {
-    const paths = window.document.getElementsByTagName("path")
+    const mapRender = window.document.getElementById("country-map-render")
+    const paths = mapRender.getElementsByTagName("path");
+
+    console.log(paths)
+
     if (paths != null) {
         for (let i = 0; i < paths.length; i++) {
             const child = paths[i];
@@ -126,6 +130,10 @@ function button10() {
 }
 
 async function button11() {
+
+    const mapLegend = window.document.getElementById("country-map-legend")
+    mapLegend.style.display = "block"
+
     let results = await fetch("https://restcountries.eu/rest/v2/all?fields=alpha2Code;gini")
         .then(response => response.json())
 
@@ -136,22 +144,6 @@ async function button11() {
         const countryPath = window.document.getElementById(code)
         if(gini != null) countryPath.style.fill = giniColor(gini)
     }
-
-    /*
-    resultAllCodes = resultAllCodes.map(e => e.alpha2Code)
-
-    for (let i = 0; i < resultAllCodes.length; i++) {
-        const resultCode = resultAllCodes[i];
-        const gini = await fetch("https://restcountries.eu/rest/v2/alpha/" + resultCode + "?fields=gini")
-            .then(response => response.json())
-            .then(json => json.gini)
-        const countryPath = window.document.getElementById(resultCode)
-        if(gini != null) countryPath.style.fill = giniColor(gini)
-
-    }
-     */
-
-    //https://restcountries.eu/rest/v2/all?fields=alpha2Code
 }
 
 function giniColor(gini) {
@@ -159,7 +151,6 @@ function giniColor(gini) {
     else if(gini <= 45) return "#00BFAC"
     else if(gini <= 60) return "#00726A"
     else return "#003135"
-
 }
 
 function formsElementClicked(event) {
@@ -167,7 +158,7 @@ function formsElementClicked(event) {
 }
 
 function mapElementClicked(event) {
-    window.alert(event.target.getAttribute("countryName"))
+    window.alert(event.target.getAttribute("countryname"))
 }
 
 let lastColor = defaultCountryColor

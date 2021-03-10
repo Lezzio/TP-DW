@@ -9,6 +9,13 @@
     border: solid 1px #d6caca;
 }
 
+.button-container input[type=button]:active {
+    background-color: dodgerblue;
+}
+.button-container input[type=button]:hover {
+    background-color: #e0e0e5;
+}
+
 .button-container input[type=text] {
     width: 320px;
     height: 15px;
@@ -44,6 +51,7 @@
 }
 
 #country-map-legend {
+    display: none;
     width: fit-content;
     width: -moz-fit-content;
     margin-left: auto;
