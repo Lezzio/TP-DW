@@ -26,9 +26,10 @@ function button3() {
     div3.replaceWith(styledCountry.getElementById("button3-render"))
 
     //Question 10 - highlight same speaking countries in green on the world map
-    const sameSpeakingCodes = document.evaluate("//country[contains(languages, //country[country_codes/cca2 = '" + countryCode + "']/languages)]/country_codes/cca2", xmlDocument)
+    const sameSpeakingCodes = xmlDocument.evaluate("//country[contains(languages, //country[country_codes/cca2 = '" + countryCode + "']/languages)]/country_codes/cca2", xmlDocument)
     let sameSpeakingCode = sameSpeakingCodes.iterateNext();
     while (sameSpeakingCode) {
+        console.log(sameSpeakingCode)
         const countrySvgPath = window.document.getElementById(sameSpeakingCode.textContent)
         countrySvgPath.style.fill = "green"
         sameSpeakingCode = sameSpeakingCodes.iterateNext()
@@ -39,8 +40,10 @@ function button4() {
 
     const svgFile = chargerHttpXML("exemple.svg")
 
-    const svgHTML = svgFile.getElementById("lesFormes")
-    window.document.body.appendChild(svgHTML)
+    let svgRender = window.document.getElementById("example-svg-render")
+    const svgElement = svgFile.getElementById("lesFormes")
+    svgRender.innerHTML = new XMLSerializer().serializeToString(svgElement)
+
 
 }
 
@@ -57,10 +60,9 @@ function button5() {
 }
 
 function button6() {
-
     const svgFile = chargerHttpXML("worldHigh.svg")
-    window.document.body.appendChild(svgFile.getElementsByTagName("svg")[0])
-
+    let mapRender = window.document.getElementById("country-map-render")
+    mapRender.innerHTML = new XMLSerializer().serializeToString(svgFile.getElementsByTagName("svg")[0])
 }
 
 function button7() {
@@ -110,6 +112,33 @@ function button10() {
     currencyEnabled = !currencyEnabled
 }
 
+async function button11() {
+    let resultAllCodes = await fetch("https://restcountries.eu/rest/v2/all?fields=alpha2Code")
+        .then(response => response.json())
+
+    resultAllCodes = resultAllCodes.map(e => e.alpha2Code)
+
+    for (let i = 0; i < resultAllCodes.length; i++) {
+        const resultCode = resultAllCodes[i];
+        const gini = await fetch("https://restcountries.eu/rest/v2/alpha/" + resultCode + "?fields=gini")
+            .then(response => response.json())
+            .then(json => json.gini)
+        const countryPath = window.document.getElementById(resultCode)
+        if(gini != null) countryPath.style.fill = giniColor(gini)
+
+    }
+
+    //https://restcountries.eu/rest/v2/all?fields=alpha2Code
+}
+
+function giniColor(gini) {
+    if(gini > 0 && gini <= 25) return "#ACE8DA"
+    else if(gini <= 45) return "#00BFAC"
+    else if(gini <= 60) return "#00726A"
+    else return "#003135"
+
+}
+
 function formsElementClicked(event) {
     window.alert(event.target.getAttribute("title"))
 }
@@ -118,8 +147,11 @@ function mapElementClicked(event) {
     window.alert(event.target.getAttribute("countryName"))
 }
 
+let lastColor = "#CCCCCC"
+
 //Display nom, capitale et drapeau dans un tableau au dessus de la carte
 async function countryOver(event) {
+    lastColor = event.target.style.fill
     //Visual
     event.target.style.fill = "red"
 
@@ -148,7 +180,8 @@ async function countryOver(event) {
 }
 
 function countryLeft(event) {
-    event.target.style.fill = "#CCCCCC"
+    event.target.style.fill = lastColor
+
 }
 
 //charge le fichier XML se trouvant à l'URL relative donné dans le paramètreet le retourne
