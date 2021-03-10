@@ -1,3 +1,24 @@
+.button-container input[type=button] {
+    width: 320px;
+    height: 30px;
+    text-align: left;
+    margin-top: 4px;
+    font-size: 15px;
+    background-color: #F9F9FB;
+    border-radius: 12px;
+    border: solid 1px #d6caca;
+}
+
+.button-container input[type=text] {
+    width: 320px;
+    height: 15px;
+    text-align: left;
+    margin-top: 4px;
+    font-size: 15px;
+    background-color: #F9F9FB;
+    border: solid 1px #d6caca;
+}
+
 #map-container {
     background-color: #F9F9FB;
     width: 80%;
@@ -8,20 +29,23 @@
 }
 
 #country-data-render {
+    width: fit-content;
+    width: -moz-fit-content;
     margin-left: auto;
     margin-right: auto;
-    width: fit-content;
 }
 
 #country-map-render {
+    width: fit-content;
+    width: -moz-fit-content;
     margin-left: auto;
     margin-right: auto;
     height: 660px;
-    width: fit-content;
 }
 
 #country-map-legend {
     width: fit-content;
+    width: -moz-fit-content;
     margin-left: auto;
     margin-right: auto;
 }
