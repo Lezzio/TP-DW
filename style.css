@@ -1,0 +1,65 @@
+#map-container {
+    background-color: #F9F9FB;
+    width: 80%;
+    min-width: 1150px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 20px;
+}
+
+#country-data-render {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}
+
+#country-map-render {
+    margin-left: auto;
+    margin-right: auto;
+    height: 660px;
+    width: fit-content;
+}
+
+#country-map-legend {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.gini-header {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.gini-level {
+    display: inline-block;
+    box-sizing: border-box;
+    height: 25px;
+    vertical-align: top;
+}
+.gini-level-title {
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    margin: 5px 5px;
+}
+
+.gini-square {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin: 3px 0;
+}
+
+.gini-very-low {
+    background-color: #ACE8DA;
+}
+.gini-low {
+    background-color: #00BFAC;
+}
+.gini-medium {
+    background-color: #00BFAC;
+}
+.gini-high {
+    background-color: #003135;
+}

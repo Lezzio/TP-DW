@@ -10,6 +10,7 @@
     <xsl:template match="/">
         <html>
             <div id="country-data-render">
+                <div id="country-data-title" style="text-align: center; font-weight: 700; font-size: 16px; margin-bottom: 4px;">Data of the country : </div>
                 <table>
                     <thead>
                         <tr>
@@ -30,8 +31,8 @@
                             <td style="text-align: center; min-width: 260px;">
                                 <xsl:value-of select="//country[country_codes/cca2 = $countryCode]/capital"/>
                             </td>
-                            <td style="text-align: center min-width: 260px;">
-                                <img alt="" height="40" width="60">
+                            <td style="min-width: 260px;">
+                                <img style="margin-left: 100px" alt="" height="40" width="60">
                                     <xsl:attribute name="src">
                                         <xsl:value-of select="concat('http://www.geonames.org/flags/x/', $countryCodeLowerCase, '.gif')"/>
                                     </xsl:attribute>

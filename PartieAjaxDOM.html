@@ -4,34 +4,78 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
 <div>
-    <input style="display: block;" name="button" type="button" id="myButton1" onClick="button1()" value="Bouton 1 (update background)"/>
-    <input style="display: block;" name="button" type="button" id="myButton2" onClick="button2()" value="Bouton 2 (reset background)"/>
-    <input name="button" type="button" id="myButton3" onClick="button3()" value="Bouton 3 (country infos)"/>
 
-    <input name="text" type="text" list="country-list" id="myText1" placeholder="Code du pays" value = ""/>
-    <datalist id="country-list"></datalist>
+    <div class="button-container">
+        <input style="display: block;" name="button" type="button" id="myButton1" onClick="button1()"
+               value="Bouton 1 (update background)"/>
+        <input style="display: block;" name="button" type="button" id="myButton2" onClick="button2()"
+               value="Bouton 2 (reset background)"/>
+        <input name="button" type="button" id="myButton3" onClick="button3()" value="Bouton 3 (country infos)"/>
 
-    <div id="button3-render"></div>
+        <input name="text" type="text" list="country-list" id="myText1" placeholder="Country's code" value=""/>
+        <datalist id="country-list"></datalist>
 
-    <input style="display: block;" name="button" type="button" id="myButton4" onClick="button4()" value="Bouton 4 (example svg)"/>
-    <input style="display: block;" name="button" type="button" id="myButton5" onClick="button5()" value="Bouton 5 (clickable example svg elements)"/>
-    <input style="display: block;" name="button" type="button" id="myButton6" onClick="button6()" value="Bouton 6 (svg world map)"/>
-    <input style="display: block;" name="button" type="button" id="myButton7" onClick="button7()" value="Bouton 7 (clickable svg world map)"/>
-    <input style="display: block;" name="button" type="button" id="myButton8" onClick="button8()" value="Bouton 8 (mouse enter/leave map)"/>
-    <input style="display: block;" name="button" type="button" id="myButton9" onClick="button9()" value="Bouton 9 (add input 3 autocomplete)"/>
-    <input style="display: block;" name="button" type="button" id="myButton10" onClick="button10()" value="Bouton 10 (add button 8 currency infos)"/>
-    <input style="display: block;" name="button" type="button" id="myButton11" onClick="button11()" value="Bouton 11 (add button 8 currency infos)"/>
+        <div id="button3-render"></div>
 
-    //TODO RESET COUNTRY HIGHLIGHTING IN BUTTON 3 WHEN CHANGING
+        <input style="display: block;" name="button" type="button" id="myButton4" onClick="button4()"
+               value="Bouton 4 (example svg)"/>
+        <input style="display: block;" name="button" type="button" id="myButton5" onClick="button5()"
+               value="Bouton 5 (clickable example svg elements)"/>
+        <input style="display: block;" name="button" type="button" id="myButton6" onClick="button6()"
+               value="Bouton 6 (svg world map)"/>
+        <input style="display: block;" name="button" type="button" id="myButton7" onClick="button7()"
+               value="Bouton 7 (clickable svg world map)"/>
+        <input style="display: block;" name="button" type="button" id="myButton8" onClick="button8()"
+               value="Bouton 8 (mouse enter/leave map)"/>
+        <input style="display: block;" name="button" type="button" id="myButton9" onClick="button9()"
+               value="Bouton 9 (add input 3 autocomplete)"/>
+        <input style="display: block;" name="button" type="button" id="myButton10" onClick="button10()"
+               value="Bouton 10 (add button 8 currency infos)"/>
+        <input style="display: block;" name="button" type="button" id="myButton11" onClick="button11()"
+               value="Bouton 11 (display gini country level)"/>
+    </div>
 
     <div id="example-svg-render"></div>
 
-    <div id="country-data-render"></div>
-    <div id="country-map-render"></div>
-    <div id="country-map-legend"></div>
+    <div id="map-container">
+        <div id="country-data-render"></div>
+        <div id="country-map-render"></div>
+        <div id="country-map-legend">
+            <div class="gini-header">
+                Gini coefficient (represent the income/wealth inequalities) :
+            </div>
+            <div class="gini-level-container">
+                <div class="gini-level">
+                    <div class="gini-square gini-very-low"></div>
+                    <div class="gini-level-title">Very low</div>
+                </div>
+                <div class="gini-level">
+                    <div class="gini-square gini-low"></div>
+                    <div class="gini-level-title">Low</div>
+                </div>
+                <div class="gini-level">
+                    <div class="gini-square gini-medium"></div>
+                    <div class="gini-level-title">Medium</div>
+                </div>
+                <div class="gini-level">
+                    <div class="gini-square gini-high"></div>
+                    <div class="gini-level-title">High</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

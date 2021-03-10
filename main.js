@@ -1,3 +1,6 @@
+
+const defaultCountryColor = "#CCCCCC"
+
 function button1() {
     const body = window.document.body
     body.style.backgroundColor = "blue"
@@ -26,12 +29,22 @@ function button3() {
     div3.replaceWith(styledCountry.getElementById("button3-render"))
 
     //Question 10 - highlight same speaking countries in green on the world map
-    const sameSpeakingCodes = xmlDocument.evaluate("//country[contains(languages, //country[country_codes/cca2 = '" + countryCode + "']/languages)]/country_codes/cca2", xmlDocument)
+
+    const mapRender = window.document.getElementById("country-map-render")
+    const paths = mapRender.getElementsByTagName("g")[0].getElementsByTagName("path")
+    for(let path of paths) {
+        path.style.fill = defaultCountryColor
+    }
+
+
+    const sameSpeakingCodes = xmlDocument.evaluate("//country[languages/descendant::* = //country[country_codes/cca2 = '" + countryCode + "']/languages/descendant::*]/country_codes/cca2", xmlDocument)
     let sameSpeakingCode = sameSpeakingCodes.iterateNext();
     while (sameSpeakingCode) {
         console.log(sameSpeakingCode)
         const countrySvgPath = window.document.getElementById(sameSpeakingCode.textContent)
-        countrySvgPath.style.fill = "green"
+        if(countrySvgPath != null) {
+            countrySvgPath.style.fill = "green"
+        }
         sameSpeakingCode = sameSpeakingCodes.iterateNext()
     }
 }
@@ -61,7 +74,7 @@ function button5() {
 
 function button6() {
     const svgFile = chargerHttpXML("worldHigh.svg")
-    let mapRender = window.document.getElementById("country-map-render")
+    const mapRender = window.document.getElementById("country-map-render")
     mapRender.innerHTML = new XMLSerializer().serializeToString(svgFile.getElementsByTagName("svg")[0])
 }
 
@@ -147,7 +160,7 @@ function mapElementClicked(event) {
     window.alert(event.target.getAttribute("countryName"))
 }
 
-let lastColor = "#CCCCCC"
+let lastColor = defaultCountryColor
 
 //Display nom, capitale et drapeau dans un tableau au dessus de la carte
 async function countryOver(event) {
