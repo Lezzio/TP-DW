@@ -51,6 +51,8 @@ function button4() {
     const svgElement = svgFile.getElementById("lesFormes")
     svgRender.innerHTML = new XMLSerializer().serializeToString(svgElement)
 
+    const button = window.document.getElementById("myButton4")
+    button.classList.add("button-enabled")
 
 }
 
@@ -59,6 +61,8 @@ function button5() {
     if(svgHTML != null) {
         const group = svgHTML.getElementsByTagName("g")[0]
         if (group != null) {
+            const button = window.document.getElementById("myButton5")
+            button.classList.add("button-enabled")
             const children = group.children;
             for (let i = 0; i < children.length; i++) {
                 const child = children[i];
@@ -69,6 +73,8 @@ function button5() {
 }
 
 function button6() {
+    const button = window.document.getElementById("myButton6")
+    button.classList.add("button-enabled")
     const svgFile = chargerHttpXML("worldHigh.svg")
     const mapRender = window.document.getElementById("country-map-render")
     mapRender.innerHTML = new XMLSerializer().serializeToString(svgFile.getElementsByTagName("svg")[0])
@@ -79,6 +85,10 @@ function button7() {
     const paths = mapRender.getElementsByTagName("path");
 
     if (paths != null) {
+        if(paths.length > 0) { //Check if the map was activated before hence paths length > 0
+            const button = window.document.getElementById("myButton7")
+            button.classList.add("button-enabled")
+        }
         for (let i = 0; i < paths.length; i++) {
             const child = paths[i];
             child.addEventListener("click", mapElementClicked, false)
@@ -88,8 +98,12 @@ function button7() {
 
 function button8() {
     const mapRender = window.document.getElementById("country-map-render")
-    const paths = mapRender.getElementsByTagName("path")
+    const paths = mapRender.getElementsByTagName("path");
     if (paths != null) {
+        if(paths.length > 0) { //Check if the map was activated before hence paths length > 0
+            const button = window.document.getElementById("myButton8")
+            button.classList.add("button-enabled")
+        }
         for (let i = 0; i < paths.length; i++) {
             const child = paths[i];
             child.addEventListener("mouseover", countryOver, false)
@@ -102,6 +116,8 @@ let listPopulated = false
 
 function button9() {
     if (!listPopulated) {
+        const button = window.document.getElementById("myButton9")
+        button.classList.add("button-enabled")
         //Population datalist for autocomplete
         const countryDatalist = window.document.getElementById("country-list")
         const xmlDocument = chargerHttpXML("countriesTP.xml")
@@ -121,6 +137,13 @@ let currencyEnabled = false
 
 function button10() {
     currencyEnabled = !currencyEnabled
+    if(currencyEnabled) {
+        const button = window.document.getElementById("myButton10")
+        button.classList.add("button-enabled")
+    } else {
+        const button = window.document.getElementById("myButton10")
+        button.classList.remove("button-enabled")
+    }
 }
 
 /**
@@ -141,6 +164,14 @@ async function button11() {
         const countryPath = window.document.getElementById(code)
         if(countryPath != null) countryPath.style.fill = giniColor(gini)
     }
+
+    //Handle button activation
+    const buttonGini = window.document.getElementById("myButton11")
+    buttonGini.classList.add("button-enabled")
+    const buttonWater = window.document.getElementById("myButton12")
+    buttonWater.classList.remove("button-enabled")
+    const buttonDensity = window.document.getElementById("myButton13")
+    buttonDensity.classList.remove("button-enabled")
 
 }
 
@@ -163,6 +194,14 @@ async function button12() {
         let water = results.water.short
         if(water != null) path.style.fill = waterColor(water)
     }
+
+    //Handle button activation
+    const buttonGini = window.document.getElementById("myButton11")
+    buttonGini.classList.remove("button-enabled")
+    const buttonWater = window.document.getElementById("myButton12")
+    buttonWater.classList.add("button-enabled")
+    const buttonDensity = window.document.getElementById("myButton13")
+    buttonDensity.classList.remove("button-enabled")
 
 }
 
@@ -202,6 +241,14 @@ async function button13() {
         }
     }
 
+    //Handle button activation
+    const buttonGini = window.document.getElementById("myButton11")
+    buttonGini.classList.remove("button-enabled")
+    const buttonWater = window.document.getElementById("myButton12")
+    buttonWater.classList.remove("button-enabled")
+    const buttonDensity = window.document.getElementById("myButton13")
+    buttonDensity.classList.add("button-enabled")
+
 }
 
 let avgTemperatureEnabled = false
@@ -209,10 +256,35 @@ let hourEnabled = false
 
 function button14() {
     avgTemperatureEnabled = !avgTemperatureEnabled
+    //If enabled, disable collisions (only one at once for CORS header missing websites)
+    if(avgTemperatureEnabled) {
+        hourEnabled = false
+        const buttonTime = window.document.getElementById("myButton15")
+        buttonTime.classList.remove("button-enabled")
+
+        const button = window.document.getElementById("myButton14")
+        button.classList.add("button-enabled")
+    } else {
+        const button = window.document.getElementById("myButton14")
+        button.classList.remove("button-enabled")
+    }
 }
 
 function button15() {
     hourEnabled = !hourEnabled
+    //If enabled, disable collisions (only one at once for CORS header missing websites)
+    if(avgTemperatureEnabled) {
+        avgTemperatureEnabled = false
+        const button = window.document.getElementById("myButton14")
+        button.classList.remove("button-enabled")
+
+        const buttonTime = window.document.getElementById("myButton15")
+        buttonTime.classList.add("button-enabled")
+
+    } else {
+        const button = window.document.getElementById("myButton15")
+        button.classList.remove("button-enabled")
+    }
 }
 
 function giniColor(gini) {
@@ -257,21 +329,21 @@ async function countryOver(event) {
         xsltProcessor.setParameter(null, "currencyValue", result.name + " " + result.symbol)
     }
     if (avgTemperatureEnabled) {
-        const result = await fetch("https://travelbriefing.org/" + countryCode + "?format=json")
+        let result = await fetch("https://travelbriefing.org/" + countryCode + "?format=json")
             .then(response => response.json())
-        let weather = result.weather
-        var avgTemp = 0
-        for (const month in weather) {
-            avgTemp+=parseFloat(weather[month]['tAvg'])
-        }
-        avgTemp /= 12
-        xsltProcessor.setParameter(null, "avgTempValue", avgTemp)
+            let weather = result.weather
+            var avgTemp = 0
+            for (const month in weather) {
+                avgTemp += parseFloat(weather[month]['tAvg'])
+            }
+            avgTemp /= 12
+            xsltProcessor.setParameter(null, "avgTempValue", avgTemp)
     }
     if (hourEnabled) {
         const result = await fetch("https://travelbriefing.org/" + countryCode + "?format=json")
             .then(response => response.json())
         const timezone = result.timezone.name
-        const timezoneapi = await fetch("http://worldtimeapi.org/api/timezone/"+ timezone)
+        const timezoneapi = await fetch("https://worldtimeapi.org/api/timezone/"+ timezone)
             .then(response => response.json())
         const date_time = timezoneapi.datetime
         const date = date_time.substring(0,9)

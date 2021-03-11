@@ -19,7 +19,7 @@
 }
 
 .button-container input[type=button]:active {
-    background-color: dodgerblue;
+    background-color: dodgerblue !important;
 }
 .button-container input[type=button]:hover {
     background-color: #e0e0e5;
@@ -32,6 +32,10 @@
     display: inline-block;
 }
 
+.button-enabled {
+    background-color: #2ECC71 !important;
+}
+
 .column {
     display: inline-block;
     vertical-align: top;
@@ -40,7 +44,7 @@
 }
 
 .button-container input[type=text] {
-    width: 100px;
+    width: 110px;
     height: 15px;
     text-align: left;
     margin-top: 4px;
