@@ -56,12 +56,14 @@ function button4() {
 
 function button5() {
     const svgHTML = window.document.getElementById("lesFormes")
-    const group = svgHTML.getElementsByTagName("g")[0]
-    if (group != null) {
-        const children = group.children;
-        for (let i = 0; i < children.length; i++) {
-            const child = children[i];
-            child.addEventListener("click", formsElementClicked, false)
+    if(svgHTML != null) {
+        const group = svgHTML.getElementsByTagName("g")[0]
+        if (group != null) {
+            const children = group.children;
+            for (let i = 0; i < children.length; i++) {
+                const child = children[i];
+                child.addEventListener("click", formsElementClicked, false)
+            }
         }
     }
 }
@@ -85,7 +87,8 @@ function button7() {
 }
 
 function button8() {
-    const paths = window.document.getElementsByTagName("path")
+    const mapRender = window.document.getElementById("country-map-render")
+    const paths = mapRender.getElementsByTagName("path")
     if (paths != null) {
         for (let i = 0; i < paths.length; i++) {
             const child = paths[i];
