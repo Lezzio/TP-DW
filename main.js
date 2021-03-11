@@ -30,17 +30,11 @@ function button3() {
 
     //Question 10 - highlight same speaking countries in green on the world map
 
-    const mapRender = window.document.getElementById("country-map-render")
-    const paths = mapRender.getElementsByTagName("g")[0].getElementsByTagName("path")
-    for(let path of paths) {
-        path.style.fill = defaultCountryColor
-    }
-
+    resetMap() //First we reset the map (colors, legends)
 
     const sameSpeakingCodes = xmlDocument.evaluate("//country[languages/descendant::* = //country[country_codes/cca2 = '" + countryCode + "']/languages/descendant::*]/country_codes/cca2", xmlDocument)
     let sameSpeakingCode = sameSpeakingCodes.iterateNext();
     while (sameSpeakingCode) {
-        console.log(sameSpeakingCode)
         const countrySvgPath = window.document.getElementById(sameSpeakingCode.textContent)
         if(countrySvgPath != null) {
             countrySvgPath.style.fill = "green"
@@ -82,8 +76,6 @@ function button7() {
     const mapRender = window.document.getElementById("country-map-render")
     const paths = mapRender.getElementsByTagName("path");
 
-    console.log(paths)
-
     if (paths != null) {
         for (let i = 0; i < paths.length; i++) {
             const child = paths[i];
@@ -113,7 +105,6 @@ function button9() {
         const codes = xmlDocument.evaluate("//country/country_codes/cca2", xmlDocument)
         let code = codes.iterateNext();
         while (code) {
-            console.log(code.textContent)
             const option = document.createElement("OPTION")
             option.value = code.textContent
             countryDatalist.appendChild(option)
@@ -129,9 +120,12 @@ function button10() {
     currencyEnabled = !currencyEnabled
 }
 
+/**
+ * Gini coefficient
+ */
 async function button11() {
-
-    const mapLegend = window.document.getElementById("country-map-legend")
+    resetMap()
+    const mapLegend = window.document.getElementById("country-map-legend-gini")
     mapLegend.style.display = "block"
 
     let results = await fetch("https://restcountries.eu/rest/v2/all?fields=alpha2Code;gini")
@@ -144,6 +138,67 @@ async function button11() {
         const countryPath = window.document.getElementById(code)
         if(gini != null) countryPath.style.fill = giniColor(gini)
     }
+
+}
+
+/**
+ * Water recommendations
+ */
+async function button12() {
+    resetMap()
+    const mapLegend = window.document.getElementById("country-map-legend-water")
+    mapLegend.style.display = "block"
+    let countries = await fetch("https://travelbriefing.org/countries.json")
+        .then(response => response.json())
+
+
+    const mapRender = window.document.getElementById("country-map-render")
+    const paths = mapRender.getElementsByTagName("path")
+    for(let path of paths) {
+        let results = await fetch("https://travelbriefing.org/" + path.id + "?format=json")
+            .then(response => response.json())
+        let water = results.water.short
+        if(water != null) path.style.fill = waterColor(water)
+    }
+
+}
+
+function waterColor(water) {
+    if(water === "not safe") return "#000000"
+    else if(water === "not recommended") return "#d2d22e"
+    else if(water === "safe") return "#108110"
+    else return defaultCountryColor
+}
+
+/**
+ * Population density
+ */
+async function button13() {
+    resetMap()
+    const mapLegend = window.document.getElementById("country-map-legend-density")
+    mapLegend.style.display = "block"
+
+    let results = await fetch("https://restcountries.eu/rest/v2/all?fields=alpha2Code;population;area")
+        .then(response => response.json())
+
+    for(let i = 0; i < results.length; i++) {
+        const result = results[i]
+        const population = result.population
+        const area = result.area
+        const code = result.alpha2Code
+        const density = population / area
+        //Linear gradient for the color based on the computed density
+        //Min - 241, 227, 216 -> 38, 24, 13
+        const colorRed = 241 - (203 * (density / 300.0))
+        const colorGreen = 227 - (203 * (density / 300.0))
+        const colorBlue = 216 - (203 * (density / 300.0))
+
+        const countryPath = window.document.getElementById(code)
+        if(countryPath != null) {
+            countryPath.style.fill = "rgb(" + colorRed + ", " + colorGreen + ", " + colorBlue + ")"
+        }
+    }
+
 }
 
 function giniColor(gini) {
@@ -195,7 +250,22 @@ async function countryOver(event) {
 
 function countryLeft(event) {
     event.target.style.fill = lastColor
+}
 
+function resetMap() {
+    //Clear legend
+    const mapLegendGini = window.document.getElementById("country-map-legend-gini")
+    const mapLegendWater = window.document.getElementById("country-map-legend-water")
+    const mapLegendDensity = window.document.getElementById("country-map-legend-density")
+    mapLegendGini.style.display = "none"
+    mapLegendWater.style.display = "none"
+    mapLegendDensity.style.display = "none"
+    //Clear map colors
+    const mapRender = window.document.getElementById("country-map-render")
+    const paths = mapRender.getElementsByTagName("path")
+    for(let path of paths) {
+        path.style.fill = defaultCountryColor
+    }
 }
 
 //charge le fichier XML se trouvant à l'URL relative donné dans le paramètreet le retourne

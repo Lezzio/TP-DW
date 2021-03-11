@@ -45,6 +45,10 @@
                value="Bouton 10 (add button 8 currency infos)"/>
         <input style="display: block;" name="button" type="button" id="myButton11" onClick="button11()"
                value="Bouton 11 (display gini country level)"/>
+        <input style="display: block;" name="button" type="button" id="myButton12" onClick="button12()"
+               value="Bouton 12 (display drinkable water countries)"/>
+        <input style="display: block;" name="button" type="button" id="myButton13" onClick="button13()"
+               value="Bouton 13 (display population density)"/>
     </div>
 
     <div id="example-svg-render"></div>
@@ -52,29 +56,75 @@
     <div id="map-container">
         <div id="country-data-render"></div>
         <div id="country-map-render"></div>
-        <div id="country-map-legend">
-            <div class="gini-header">
+
+        <div id="country-map-legend-gini" class="legend">
+            <div class="legend-header">
                 Gini coefficient (represent the income/wealth inequalities) :
             </div>
-            <div class="gini-level-container">
-                <div class="gini-level">
-                    <div class="gini-square gini-very-low"></div>
-                    <div class="gini-level-title">Very low</div>
+            <div class="legend-level-container">
+                <div class="legend-level">
+                    <div class="legend-square gini-very-low"></div>
+                    <div class="legend-level-title">Very low</div>
                 </div>
-                <div class="gini-level">
-                    <div class="gini-square gini-low"></div>
-                    <div class="gini-level-title">Low</div>
+                <div class="legend-level">
+                    <div class="legend-square gini-low"></div>
+                    <div class="legend-level-title">Low</div>
                 </div>
-                <div class="gini-level">
-                    <div class="gini-square gini-medium"></div>
-                    <div class="gini-level-title">Medium</div>
+                <div class="legend-level">
+                    <div class="legend-square gini-medium"></div>
+                    <div class="legend-level-title">Medium</div>
                 </div>
-                <div class="gini-level">
-                    <div class="gini-square gini-high"></div>
-                    <div class="gini-level-title">High</div>
+                <div class="legend-level">
+                    <div class="legend-square gini-high"></div>
+                    <div class="legend-level-title">High</div>
                 </div>
             </div>
         </div>
+
+        <div id="country-map-legend-water" class="legend">
+            <div class="legend-header">
+                Water recommendations :
+            </div>
+            <div class="legend-level-container">
+                <div class="legend-level">
+                    <div class="legend-square water-safe"></div>
+                    <div class="legend-level-title">Safe</div>
+                </div>
+                <div class="legend-level">
+                    <div class="legend-square water-not-recommended"></div>
+                    <div class="legend-level-title">Not recommended</div>
+                </div>
+                <div class="legend-level">
+                    <div class="legend-square water-unsafe"></div>
+                    <div class="legend-level-title">Not safe</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="country-map-legend-density" class="legend">
+            <div class="gini-header">
+                Population density :
+            </div>
+            <div class="legend-level-container">
+                <div class="legend-level">
+                    <div class="legend-square density-very-low"></div>
+                    <div class="legend-level-title">Very low</div>
+                </div>
+                <div class="legend-level">
+                    <div class="legend-square density-low"></div>
+                    <div class="legend-level-title">Low</div>
+                </div>
+                <div class="legend-level">
+                    <div class="legend-square density-medium"></div>
+                    <div class="legend-level-title">Medium</div>
+                </div>
+                <div class="legend-level">
+                    <div class="legend-square density-high"></div>
+                    <div class="legend-level-title">High</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
 </div>

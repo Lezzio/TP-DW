@@ -50,7 +50,7 @@
     height: 660px;
 }
 
-#country-map-legend {
+.legend {
     display: none;
     width: fit-content;
     width: -moz-fit-content;
@@ -58,29 +58,33 @@
     margin-right: auto;
 }
 
-.gini-header {
+.legend-header {
     font-size: 16px;
     margin-bottom: 5px;
 }
 
-.gini-level {
+.legend-level {
     display: inline-block;
     box-sizing: border-box;
     height: 25px;
     vertical-align: top;
 }
-.gini-level-title {
+.legend-level-title {
     display: inline-block;
     box-sizing: border-box;
     vertical-align: top;
     margin: 5px 5px;
 }
 
-.gini-square {
+.legend-square {
     width: 20px;
     height: 20px;
     display: inline-block;
     margin: 3px 0;
+}
+
+.no-data {
+    background-color: #CCCCCC
 }
 
 .gini-very-low {
@@ -94,4 +98,27 @@
 }
 .gini-high {
     background-color: #003135;
+}
+
+.water-safe {
+    background-color: #108110
+}
+.water-not-recommended {
+    background-color: #d2d22e
+}
+.water-unsafe {
+    background-color: #000000
+}
+
+.density-very-low {
+    background-color: rgb(241, 227, 216)
+}
+.density-low {
+    background-color: rgb(201, 143, 103)
+}
+.density-medium {
+    background-color: rgb(113, 70, 40)
+}
+.density-high {
+    background-color: rgb(38, 24, 13)
 }
