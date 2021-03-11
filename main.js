@@ -136,7 +136,7 @@ async function button11() {
         const gini = result.gini
         const code = result.alpha2Code
         const countryPath = window.document.getElementById(code)
-        if(gini != null) countryPath.style.fill = giniColor(gini)
+        if(countryPath != null) countryPath.style.fill = giniColor(gini)
     }
 
 }
@@ -201,6 +201,17 @@ async function button13() {
 
 }
 
+let avgTemperatureEnabled = false
+let hourEnabled = false
+
+function button14() {
+    avgTemperatureEnabled = !avgTemperatureEnabled
+}
+
+function button15() {
+    hourEnabled = !hourEnabled
+}
+
 function giniColor(gini) {
     if(gini > 0 && gini <= 25) return "#ACE8DA"
     else if(gini <= 45) return "#00BFAC"
@@ -229,16 +240,41 @@ async function countryOver(event) {
 
     const xslt = chargerHttpXML("donneesPays.xsl")
 
-    const xsltProcessor = new XSLTProcessor();
+    const xsltProcessor = new XSLTProcessor()
     xsltProcessor.importStylesheet(xslt)
     xsltProcessor.setParameter(null, "countryCode", countryCode)
     xsltProcessor.setParameter(null, "countryCodeLowerCase", countryCode.toLowerCase())
     xsltProcessor.setParameter(null, "currencyInfo", currencyEnabled)
+    xsltProcessor.setParameter(null, "dateTimeInfo", hourEnabled)
+    xsltProcessor.setParameter(null, "avgTempInfo", avgTemperatureEnabled)
     if (currencyEnabled) {
         const result = await fetch("https://restcountries.eu/rest/v2/alpha/" + countryCode + "?fields=currencies")
             .then(response => response.json())
             .then(currenciesArray => currenciesArray.currencies[0])
         xsltProcessor.setParameter(null, "currencyValue", result.name + " " + result.symbol)
+    }
+    if (avgTemperatureEnabled) {
+        const result = await fetch("https://travelbriefing.org/" + countryCode + "?format=json")
+            .then(response => response.json())
+        let weather = result.weather
+        var avgTemp = 0
+        for (const month in weather) {
+            avgTemp+=parseFloat(weather[month]['tAvg'])
+        }
+        avgTemp /= 12
+        xsltProcessor.setParameter(null, "avgTempValue", avgTemp)
+    }
+    if (hourEnabled) {
+        const result = await fetch("https://travelbriefing.org/" + countryCode + "?format=json")
+            .then(response => response.json())
+        const timezone = result.timezone.name
+        const timezoneapi = await fetch("http://worldtimeapi.org/api/timezone/"+ timezone)
+            .then(response => response.json())
+        const date_time = timezoneapi.datetime
+        const date = date_time.substring(0,9)
+        const time = date_time.substring(11,19)
+
+        xsltProcessor.setParameter(null, "dateTimeValue", date + " " + time)
     }
 
     const xmlDocument = chargerHttpXML("countriesTP.xml")

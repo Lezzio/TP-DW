@@ -4,8 +4,15 @@
 
     <xsl:param name="countryCode"/>
     <xsl:param name="countryCodeLowerCase"/>
+
     <xsl:param name="currencyInfo"/>
     <xsl:param name="currencyValue"/>
+
+    <xsl:param name="dateTimeInfo"/>
+    <xsl:param name="dateTimeValue"/>
+
+    <xsl:param name="avgTempInfo"/>
+    <xsl:param name="avgTempValue"/>
 
     <xsl:template match="/">
         <html>
@@ -19,6 +26,12 @@
                             <th style="text-align: center">Drapeau</th>
                             <xsl:if test="$currencyInfo = 'true'">
                                 <th style="text-align: center">Devise</th>
+                            </xsl:if>
+                            <xsl:if test="$dateTimeInfo = 'true'">
+                                <th style = "text-align: center">Date and Time</th>
+                            </xsl:if>
+                            <xsl:if test="$avgTempInfo = 'true'">
+                                <th style = "text-align: center">Average Temperature</th>
                             </xsl:if>
                         </tr>
                     </thead>
@@ -41,6 +54,18 @@
                             <xsl:if test="$currencyInfo = 'true'">
                                 <td style="text-align: center; min-width: 260px;">
                                     <xsl:value-of select="$currencyValue"/>
+                                    <!--<xsl:value-of select="document('https://restcountries.eu/rest/v2/alpha/fr')"/> -->
+                                </td>
+                            </xsl:if>
+                            <xsl:if test="$dateTimeInfo = 'true'">
+                                <td style="text-align: center; min-width: 260px;">
+                                    <xsl:value-of select="$dateTimeValue"/>
+                                    <!--<xsl:value-of select="document('https://restcountries.eu/rest/v2/alpha/fr')"/> -->
+                                </td>
+                            </xsl:if>
+                            <xsl:if test="$avgTempInfo = 'true'">
+                                <td style="text-align: center; min-width: 260px;">
+                                    <xsl:value-of select="$avgTempValue"/> °C
                                     <!--<xsl:value-of select="document('https://restcountries.eu/rest/v2/alpha/fr')"/> -->
                                 </td>
                             </xsl:if>
