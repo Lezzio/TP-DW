@@ -151,6 +151,7 @@ function button10() {
  */
 async function button11() {
     resetMap()
+    waterEnabled = false;
     const mapLegend = window.document.getElementById("country-map-legend-gini")
     mapLegend.style.display = "block"
 
@@ -175,25 +176,16 @@ async function button11() {
 
 }
 
+let waterEnabled = false;
 /**
  * Water recommendations
  */
 async function button12() {
+    //Reset map before drawing
     resetMap()
-    const mapLegend = window.document.getElementById("country-map-legend-water")
-    mapLegend.style.display = "block"
-    let countries = await fetch("https://travelbriefing.org/countries.json")
-        .then(response => response.json())
 
-
-    const mapRender = window.document.getElementById("country-map-render")
-    const paths = mapRender.getElementsByTagName("path")
-    for(let path of paths) {
-        let results = await fetch("https://travelbriefing.org/" + path.id + "?format=json")
-            .then(response => response.json())
-        let water = results.water.short
-        if(water != null) path.style.fill = waterColor(water)
-    }
+    //Set the water drawing process as enabled
+    waterEnabled = true;
 
     //Handle button activation
     const buttonGini = window.document.getElementById("myButton11")
@@ -202,6 +194,35 @@ async function button12() {
     buttonWater.classList.add("button-enabled")
     const buttonDensity = window.document.getElementById("myButton13")
     buttonDensity.classList.remove("button-enabled")
+
+    //Button proccess
+    const mapLegend = window.document.getElementById("country-map-legend-water")
+    mapLegend.style.display = "block"
+    let countries = await fetch("https://travelbriefing.org/countries.json")
+        .then(response => response.json())
+
+
+    const mapRender = window.document.getElementById("country-map-render")
+    const paths = mapRender.getElementsByTagName("path")
+
+    const promises = new Map()
+
+    //Send queries in parallel
+    for(let path of paths) {
+        promises.set(path, fetch("https://travelbriefing.org/" + path.id + "?format=json")
+            .then(response => response.json()))
+    }
+    const keys = promises.keys()
+    let key = keys.next()
+    while(!key.done && waterEnabled) {
+        const path = key.value
+        const promise = await promises.get(path)
+        if(promise != null) {
+            let water = promise.water.short
+            if(water != null) path.style.fill = waterColor(water)
+        }
+        key = keys.next()
+    }
 
 }
 
@@ -217,6 +238,7 @@ function waterColor(water) {
  */
 async function button13() {
     resetMap()
+    waterEnabled = false;
     const mapLegend = window.document.getElementById("country-map-legend-density")
     mapLegend.style.display = "block"
 
@@ -273,7 +295,7 @@ function button14() {
 function button15() {
     hourEnabled = !hourEnabled
     //If enabled, disable collisions (only one at once for CORS header missing websites)
-    if(avgTemperatureEnabled) {
+    if(hourEnabled) {
         avgTemperatureEnabled = false
         const button = window.document.getElementById("myButton14")
         button.classList.remove("button-enabled")
