@@ -2,18 +2,30 @@
 const defaultCountryColor = "#CCCCCC"
 
 function button1() {
-    const body = window.document.body
-    body.style.backgroundColor = "blue"
+    //Button text color
     const button1 = window.document.getElementById("myButton1")
     button1.style.color = "white"
+    //Body
+    const body = window.document.body
+    body.style.backgroundColor = "#92B4F2"
+
+    //Extra colored div containing the map
+    const mapContainer = window.document.getElementById("map-container")
+    mapContainer.style.backgroundColor = "#92B4F2"
 }
 
 function button2() {
+    //Body
     const body = window.document.body
     body.style.backgroundColor = "white"
+
+    //Extra colored div containing the map
+    const mapContainer = window.document.getElementById("map-container")
+    mapContainer.style.backgroundColor = "#F9F9FB"
 }
 
 function button3() {
+    waterEnabled = false //Disable async water processing
     const countryCode = window.document.getElementById("myText1").value
 
     const xslt = chargerHttpXML("cherchePays.xsl")
@@ -151,7 +163,7 @@ function button10() {
  */
 async function button11() {
     resetMap()
-    waterEnabled = false;
+    waterEnabled = false; //Disable async water processing
     const mapLegend = window.document.getElementById("country-map-legend-gini")
     mapLegend.style.display = "block"
 
@@ -176,7 +188,7 @@ async function button11() {
 
 }
 
-let waterEnabled = false;
+let waterEnabled = false; //Disable async water processing
 /**
  * Water recommendations
  */
@@ -238,7 +250,7 @@ function waterColor(water) {
  */
 async function button13() {
     resetMap()
-    waterEnabled = false;
+    waterEnabled = false; //Disable async water processing
     const mapLegend = window.document.getElementById("country-map-legend-density")
     mapLegend.style.display = "block"
 

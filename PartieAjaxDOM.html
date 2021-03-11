@@ -21,7 +21,7 @@
 
         <div class="column">
             <input name="button" type="button" id="myButton1" onClick="button1()"
-                   value="Bouton 1 (update background)"/>
+                   value="Bouton 1 (ocean background)"/>
             <input name="button" type="button" id="myButton2" onClick="button2()"
                    value="Bouton 2 (reset background)"/>
 
@@ -56,11 +56,11 @@
 
         <div class="column">
             <input name="button" type="button" id="myButton11" onClick="button11()"
-                   value="Bouton 11 (display gini country level)"/>
+                   value="Bouton 11 (display map gini country level)"/>
             <input name="button" type="button" id="myButton12" onClick="button12()"
-                   value="Bouton 12 (display drinking water data)"/>
+                   value="Bouton 12 (display map drinking water data)"/>
             <input name="button" type="button" id="myButton13" onClick="button13()"
-                   value="Bouton 13 (display population density)"/>
+                   value="Bouton 13 (display map population density)"/>
             <input name="button" type="button" id="myButton14" onClick="button14()"
                    value="Bouton 14 (add button 8 avg temperature)"/>
             <input name="button" type="button" id="myButton15" onClick="button15()"
@@ -96,6 +96,10 @@
                     <div class="legend-square gini-high"></div>
                     <div class="legend-level-title">High</div>
                 </div>
+                <div class="legend-level">
+                    <div class="legend-square no-data"></div>
+                    <div class="legend-level-title">No data</div>
+                </div>
             </div>
         </div>
 
@@ -116,11 +120,15 @@
                     <div class="legend-square water-unsafe"></div>
                     <div class="legend-level-title">Not safe</div>
                 </div>
+                <div class="legend-level">
+                    <div class="legend-square no-data"></div>
+                    <div class="legend-level-title">No data</div>
+                </div>
             </div>
         </div>
 
         <div id="country-map-legend-density" class="legend">
-            <div class="gini-header">
+            <div class="legend-header">
                 Population density :
             </div>
             <div class="legend-level-container">
@@ -139,6 +147,10 @@
                 <div class="legend-level">
                     <div class="legend-square density-high"></div>
                     <div class="legend-level-title">High</div>
+                </div>
+                <div class="legend-level">
+                    <div class="legend-square no-data"></div>
+                    <div class="legend-level-title">No data</div>
                 </div>
             </div>
         </div>
